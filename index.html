@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lullen - A quiet moment with your day</title>
+    <meta name="description" content="Lullen is a micro-journaling app that helps you capture the texture of your day in under 30 seconds.">
+    <meta name="keywords" content="journaling, mood tracking, daily reflection, mental wellness, iOS app">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --warm-white: #FAF8F5;
+            --soft-cream: #F5F0E8;
+            --muted-sage: #8FAD8A;
+            --gentle-terracotta: #D4A574;
+            --soft-lavender: #C4B8D4;
+            --deep-ink: #2D3A3A;
+            --light-ink: #5A6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--warm-white);
+            color: var(--deep-ink);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--deep-ink);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light-ink);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--muted-sage);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+        }
+
+        .hero-tagline {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--gentle-terracotta);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 600;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--light-ink);
+            max-width: 550px;
+            margin: 0 auto 40px;
+        }
+
+        .app-store-badge {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .app-store-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .app-store-badge img {
+            height: 54px;
+        }
+
+        .hero-visual {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feature-card-preview {
+            background: var(--soft-cream);
+            border-radius: 24px;
+            padding: 32px;
+            width: 280px;
+            text-align: left;
+            box-shadow: 0 4px 20px rgba(45, 58, 58, 0.06);
+        }
+
+        .feature-card-preview .icon {
+            width: 48px;
+            height: 48px;
+            background: var(--muted-sage);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .feature-card-preview h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card-preview p {
+            font-size: 0.9rem;
+            color: var(--light-ink);
+            margin: 0;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--soft-cream);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 2.25rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--light-ink);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-item {
+            background: var(--warm-white);
+            padding: 32px;
+            border-radius: 20px;
+        }
+
+        .feature-item .icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-item h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: var(--light-ink);
+            font-size: 0.95rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-card {
+            background: var(--soft-cream);
+            border-radius: 24px;
+            padding: 40px;
+            width: 320px;
+            text-align: center;
+        }
+
+        .pricing-card.featured {
+            background: var(--deep-ink);
+            color: var(--warm-white);
+        }
+
+        .pricing-card h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin: 24px 0;
+        }
+
+        .pricing-card ul li {
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .pricing-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--muted-sage);
+        }
+
+        .pricing-card.featured ul li::before {
+            color: var(--gentle-terracotta);
+        }
+
+        .badge {
+            background: var(--gentle-terracotta);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* Support Section */
+        .support {
+            padding: 80px 0;
+            background: var(--soft-cream);
+        }
+
+        .support-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .support-content h2 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 2.25rem;
+            margin-bottom: 16px;
+        }
+
+        .support-content p {
+            color: var(--light-ink);
+            margin-bottom: 32px;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--warm-white);
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--deep-ink);
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-email:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45, 58, 58, 0.1);
+        }
+
+        .faq {
+            margin-top: 60px;
+            text-align: left;
+        }
+
+        .faq h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: var(--warm-white);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .faq-item h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .faq-item p {
+            font-size: 0.9rem;
+            color: var(--light-ink);
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--deep-ink);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light-ink);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--muted-sage);
+        }
+
+        .copyright {
+            color: var(--light-ink);
+            font-size: 0.85rem;
+        }
+
+        /* Privacy Section */
+        .privacy {
+            padding: 80px 0;
+        }
+
+        .privacy-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .privacy-content h2 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+
+        .privacy-content h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.25rem;
+            margin: 32px 0 12px;
+        }
+
+        .privacy-content p {
+            color: var(--light-ink);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .privacy-content ul {
+            color: var(--light-ink);
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .privacy-content li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .feature-card-preview {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .pricing-card {
+                width: 100%;
+                max-width: 360px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">Lullen</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#support">Support</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <p class="hero-tagline">A quiet moment with your day.</p>
+            <h1>Micro-journaling that<br>fits your life</h1>
+            <p>Capture the texture of your day in under 30 seconds. Watch your emotional journey bloom into a beautiful Mood Garden.</p>
+
+            <a href="#" class="app-store-badge">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+
+            <div class="hero-visual">
+                <div class="feature-card-preview">
+                    <div class="icon">🌱</div>
+                    <h3>30-Second Check-ins</h3>
+                    <p>A simple mood slider and thoughtful prompts—that's all it takes.</p>
+                </div>
+                <div class="feature-card-preview">
+                    <div class="icon">🌸</div>
+                    <h3>Mood Garden</h3>
+                    <p>Watch your entries grow into a unique visual garden of your emotional journey.</p>
+                </div>
+                <div class="feature-card-preview">
+                    <div class="icon">✨</div>
+                    <h3>Gentle Insights</h3>
+                    <p>Discover patterns in your moods with kind, non-judgmental observations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Designed for reflection, not perfection</h2>
+                <p>Lullen removes the friction from journaling so you can focus on what matters—understanding yourself.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon">🎚️</div>
+                    <h3>Intuitive Mood Slider</h3>
+                    <p>Express how you're feeling with a beautiful gradient slider—from calm to energetic, no words needed.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">💭</div>
+                    <h3>Smart Prompts</h3>
+                    <p>Contextual follow-up questions based on your mood help you reflect more meaningfully.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">📜</div>
+                    <h3>Timeline View</h3>
+                    <p>Scroll through your history with a paper-inspired design that feels like flipping through a treasured notebook.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🔥</div>
+                    <h3>Streak Tracking</h3>
+                    <p>Build a gentle habit with encouraging streak tracking that celebrates your consistency.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🔔</div>
+                    <h3>Friendly Reminders</h3>
+                    <p>Optional daily notifications nudge you to check in at your preferred time.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🔒</div>
+                    <h3>Private by Design</h3>
+                    <p>Your entries stay on your device. Your thoughts belong to you alone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, honest pricing</h2>
+                <p>Start free. Upgrade when you're ready for more.</p>
+            </div>
+
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <ul>
+                        <li>Daily mood check-ins</li>
+                        <li>30-day timeline history</li>
+                        <li>Basic Mood Garden</li>
+                        <li>Streak tracking</li>
+                        <li>1 reflection card per month</li>
+                    </ul>
+                </div>
+                <div class="pricing-card featured">
+                    <span class="badge">BEST VALUE</span>
+                    <h3>Lullen+</h3>
+                    <div class="price">$29.99 <span>/year</span></div>
+                    <ul>
+                        <li>Everything in Free, plus:</li>
+                        <li>Unlimited timeline history</li>
+                        <li>Advanced visualizations</li>
+                        <li>Pattern insights & detection</li>
+                        <li>Unlimited reflection cards</li>
+                        <li>Data export (JSON & PDF)</li>
+                        <li>Year in Review on demand</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="support" id="support">
+        <div class="container">
+            <div class="support-content">
+                <h2>We're here to help</h2>
+                <p>Have questions, feedback, or need assistance? We'd love to hear from you.</p>
+
+                <a href="mailto:joelariz@gmail.com" class="contact-email">
+                    <span>📧</span>
+                    joelariz@gmail.com
+                </a>
+
+                <div class="faq">
+                    <h3>Frequently Asked Questions</h3>
+
+                    <div class="faq-item">
+                        <h4>Is my journal data private?</h4>
+                        <p>Absolutely. All your entries are stored locally on your device. We don't have access to your personal reflections.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Can I cancel my subscription anytime?</h4>
+                        <p>Yes, you can cancel your Lullen+ subscription at any time through your Apple ID settings. You'll continue to have access until the end of your billing period.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>How do I restore my purchase on a new device?</h4>
+                        <p>Open Lullen, go to Settings, and tap "Restore Purchases." Make sure you're signed in with the same Apple ID you used for the original purchase.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>What happens to my data if I cancel Lullen+?</h4>
+                        <p>Your data stays on your device. You'll still have access to the last 30 days in the free version. Consider exporting your data before canceling if you want to keep everything.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="privacy" id="privacy">
+        <div class="container">
+            <div class="privacy-content">
+                <h2>Privacy Policy</h2>
+                <p><em>Last updated: December 2024</em></p>
+
+                <h3>Your Privacy Matters</h3>
+                <p>Lullen is designed with privacy at its core. We believe your personal reflections should remain personal.</p>
+
+                <h3>Data Collection</h3>
+                <p>Lullen stores all journal entries, mood data, and personal content locally on your device. We do not collect, transmit, or have access to your journal content.</p>
+
+                <h3>What We Don't Collect</h3>
+                <ul>
+                    <li>Your journal entries or mood data</li>
+                    <li>Personal identifying information</li>
+                    <li>Location data</li>
+                    <li>Contacts or photos</li>
+                </ul>
+
+                <h3>Analytics</h3>
+                <p>We may collect anonymous, aggregated analytics to improve the app experience. This data cannot be used to identify you personally and does not include any journal content.</p>
+
+                <h3>Subscriptions</h3>
+                <p>Subscription purchases are processed through Apple's App Store. We do not have access to your payment information. Please refer to Apple's privacy policy for information about how they handle payment data.</p>
+
+                <h3>Data Export</h3>
+                <p>Lullen+ subscribers can export their data in JSON or PDF format. This data export is generated locally on your device.</p>
+
+                <h3>Contact</h3>
+                <p>If you have questions about this privacy policy or your data, please contact us at <a href="mailto:joelariz@gmail.com">joelariz@gmail.com</a>.</p>
+
+                <h3>Changes to This Policy</h3>
+                <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <span class="footer-logo">Lullen</span>
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#support">Support</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="mailto:joelariz@gmail.com">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2024 JJMK Studios. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
